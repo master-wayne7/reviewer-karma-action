@@ -9,6 +9,11 @@ on:
     types: [opened, synchronize, reopened, closed]
   workflow_dispatch: # Allow manual triggering
 
+permissions:
+  contents: write
+  pull-requests: read
+  issues: read
+
 jobs:
   update-leaderboard:
     runs-on: ubuntu-latest
@@ -17,12 +22,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
 
       - name: Run Reviewer Karma Action
         uses: ./
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
           review-point: "1"
           positive-emoji-point: "2"
           constructive-comment-point: "1"
