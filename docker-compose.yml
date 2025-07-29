@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  reviewer-karma:
+    build: .
+    environment:
+      - GITHUB_TOKEN=test_token_here
+      - GITHUB_REPOSITORY=master-wayne7/reviewer-karma-action
+      - REVIEW_POINT=1
+      - POSITIVE_EMOJI_POINT=2
+      - CONSTRUCTIVE_COMMENT_POINT=1
+      - INCREMENTAL_UPDATE=false
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ["./reviewer-karma", "--help"]
+
+  reviewer-karma-test:
+    build: .
+    environment:
+      - GITHUB_TOKEN=test_token_here
+      - GITHUB_REPOSITORY=master-wayne7/reviewer-karma-action
+      - REVIEW_POINT=1
+      - POSITIVE_EMOJI_POINT=2
+      - CONSTRUCTIVE_COMMENT_POINT=1
+      - INCREMENTAL_UPDATE=false
+    volumes:
+      - .:/workspace
+    working_dir: /workspace 

@@ -24,5 +24,5 @@ RUN ls -la reviewer-karma
 # Make the binary executable
 RUN chmod +x reviewer-karma
 
-# Set the entrypoint
+# Set the entrypoint to the current directory
 ENTRYPOINT ["./reviewer-karma"] 

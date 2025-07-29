@@ -60,6 +60,21 @@ docker-run:
 	@echo "Running Docker container..."
 	docker run --rm -e GITHUB_TOKEN=your_token_here reviewer-karma
 
+# Build and run with Docker Compose
+docker-compose-build:
+	@echo "Building with Docker Compose..."
+	docker-compose build
+
+# Run with Docker Compose
+docker-compose-run:
+	@echo "Running with Docker Compose..."
+	docker-compose up reviewer-karma
+
+# Test with Docker Compose
+docker-compose-test:
+	@echo "Testing with Docker Compose..."
+	docker-compose up reviewer-karma-test
+
 # Install dependencies
 deps:
 	@echo "Installing dependencies..."
@@ -87,6 +102,9 @@ help:
 	@echo "  release       - Quick release (VERSION=v1.0.0)"
 	@echo "  docker-build  - Build Docker image"
 	@echo "  docker-run    - Run Docker container"
+	@echo "  docker-compose-build - Build with Docker Compose"
+	@echo "  docker-compose-run   - Run with Docker Compose"
+	@echo "  docker-compose-test  - Test with Docker Compose"
 	@echo "  deps          - Install dependencies"
 	@echo "  fmt           - Format code"
 	@echo "  lint          - Lint code"
