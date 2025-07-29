@@ -24,5 +24,8 @@ RUN ls -la reviewer-karma
 # Make the binary executable
 RUN chmod +x reviewer-karma
 
-# Set the entrypoint to the current directory
-ENTRYPOINT ["./reviewer-karma"] 
+# Copy binary to a location that GitHub Actions can find
+RUN cp reviewer-karma /usr/local/bin/reviewer-karma
+
+# Set the entrypoint
+ENTRYPOINT ["reviewer-karma"] 
