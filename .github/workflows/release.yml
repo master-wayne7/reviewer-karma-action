@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and Release
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: |
+            master-wayne7/reviewer-karma-action:${{ github.ref_name }}
+            master-wayne7/reviewer-karma-action:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            ## What's Changed
+
+            - 🚀 New release of Reviewer Karma Action
+            - 🎯 Track reviewer engagement and generate karma-based leaderboards
+            - ⚙️ Fully customizable scoring system
+            - 🔄 Support for incremental updates
+            - 🤖 Automatic bot filtering
+
+            ## Usage
+
+            ```yaml
+            - name: Run Reviewer Karma Action
+              uses: master-wayne7/reviewer-karma-action@${{ github.ref_name }}
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+            ```
+          draft: false
+          prerelease: false

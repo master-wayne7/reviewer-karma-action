@@ -1,0 +1,38 @@
+name: "Reviewer Karma Action"
+description: "Track reviewer engagement and generate a karma-based leaderboard"
+author: "master-wayne7"
+inputs:
+  review-point:
+    description: "Points awarded for giving a code review"
+    required: false
+    default: "1"
+  positive-emoji-point:
+    description: "Points awarded for including positive emojis"
+    required: false
+    default: "2"
+  constructive-comment-point:
+    description: "Points awarded for constructive comments (>10 words)"
+    required: false
+    default: "1"
+  incremental-update:
+    description: "Use incremental updates (only process new PRs) instead of full recreation"
+    required: false
+    default: "false"
+  github-token:
+    description: "GitHub token for API access"
+    required: false
+    default: "${{ github.token }}"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    GITHUB_REPOSITORY: ${{ github.repository }}
+    GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+    REVIEW_POINT: ${{ inputs.review-point }}
+    POSITIVE_EMOJI_POINT: ${{ inputs.positive-emoji-point }}
+    CONSTRUCTIVE_COMMENT_POINT: ${{ inputs.constructive-comment-point }}
+    INCREMENTAL_UPDATE: ${{ inputs.incremental-update }}
+branding:
+  icon: "trophy"
+  color: "gold"

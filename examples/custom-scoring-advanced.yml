@@ -1,0 +1,38 @@
+name: Advanced Custom Scoring Reviewer Karma
+
+on:
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+  issue_comment:
+    types: [created, edited, deleted]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-leaderboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+          - name: Run with Advanced Custom Scoring
+      uses: master-wayne7/reviewer-karma-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Custom scoring - emphasize quality over quantity
+          review-point: "2" # Base points for any review
+          positive-emoji-point: "1" # Low value for emojis
+          constructive-comment-point: "5" # High value for detailed feedback
+          incremental-update: "true" # Use incremental updates for performance
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add REVIEWERS.md .karma-data.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update leaderboard with advanced custom scoring"
+          git push

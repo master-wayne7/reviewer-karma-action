@@ -1,0 +1,37 @@
+name: Incremental Reviewer Karma Tracker
+
+on:
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+  issue_comment:
+    types: [created, edited, deleted]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-leaderboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Reviewer Karma Action with Incremental Updates
+        uses: master-wayne7/reviewer-karma-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          review-point: "1"
+          positive-emoji-point: "2"
+          constructive-comment-point: "1"
+          incremental-update: "true" # Enable incremental updates
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add REVIEWERS.md .karma-data.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update reviewer karma leaderboard (incremental)"
+          git push
