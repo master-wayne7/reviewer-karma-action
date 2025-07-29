@@ -19,7 +19,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o reviewer-karma ./cmd/reviewer-karma
 
 # Verify the binary was created
-RUN ls -la reviewer-karma && file reviewer-karma
+RUN ls -la reviewer-karma
 
 # Make the binary executable
 RUN chmod +x reviewer-karma
