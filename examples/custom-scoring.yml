@@ -22,7 +22,8 @@ jobs:
       - name: Run Reviewer Karma Action with Custom Scoring
         uses: master-wayne7/reviewer-karma-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
           review-point: "2" # 2 points for reviews (default: 1)
           positive-emoji-point: "3" # 3 points for emojis (default: 2)
           constructive-comment-point: "2" # 2 points for constructive comments (default: 1)

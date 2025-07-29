@@ -19,10 +19,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-          - name: Run with Advanced Custom Scoring
+              - name: Run with Advanced Custom Scoring
       uses: master-wayne7/reviewer-karma-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        github-token: ${{ github.token }}
+        repository: ${{ github.repository }}
           # Custom scoring - emphasize quality over quantity
           review-point: "2" # Base points for any review
           positive-emoji-point: "1" # Low value for emojis

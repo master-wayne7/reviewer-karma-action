@@ -60,7 +60,8 @@ jobs:
     - name: Run Reviewer Karma Action
       uses: master-wayne7/reviewer-karma-action@v1
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
+        repository: ${{ github.repository }}
         review-point: '1'
         positive-emoji-point: '2'
         constructive-comment-point: '1'
@@ -79,7 +80,8 @@ jobs:
     - name: Run Reviewer Karma Action
       uses: ./
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
+        repository: ${{ github.repository }}
         review-point: '1'
         positive-emoji-point: '2'
         constructive-comment-point: '1'
@@ -141,7 +143,8 @@ When using the action, you can also configure via inputs:
 - name: Run Reviewer Karma Action
   uses: ./
   with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}
+    github-token: ${{ github.token }}
+    repository: ${{ github.repository }}
     review-point: '2'           # Custom review points
     positive-emoji-point: '3'   # Custom emoji points
     constructive-comment-point: '2' # Custom comment points

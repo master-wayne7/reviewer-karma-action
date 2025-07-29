@@ -23,23 +23,20 @@ func main() {
 	}
 
 	// Get repository information from environment
-	repoOwner := os.Getenv("GITHUB_REPOSITORY_OWNER")
-	repoName := os.Getenv("GITHUB_REPOSITORY")
-	if repoName == "" {
+	repoFullName := os.Getenv("GITHUB_REPOSITORY")
+	if repoFullName == "" {
 		fmt.Println("❌ GITHUB_REPOSITORY environment variable is required")
 		os.Exit(1)
 	}
 
-	// Parse repository name
-	parts := strings.Split(repoName, "/")
+	// Parse repository name (format: "owner/repo")
+	parts := strings.Split(repoFullName, "/")
 	if len(parts) != 2 {
-		fmt.Println("❌ Invalid GITHUB_REPOSITORY format")
+		fmt.Println("❌ Invalid GITHUB_REPOSITORY format. Expected 'owner/repo'")
 		os.Exit(1)
 	}
-	if repoOwner == "" {
-		repoOwner = parts[0]
-	}
-	repoName = parts[1]
+	repoOwner := parts[0]
+	repoName := parts[1]
 
 	// Load configuration
 	cfg := config.Load()

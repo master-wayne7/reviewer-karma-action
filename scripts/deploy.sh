@@ -105,7 +105,7 @@ if command -v gh &> /dev/null; then
 - name: Run Reviewer Karma Action
   uses: master-wayne7/reviewer-karma-action@$VERSION
   with:
-    github-token: \${{ secrets.GITHUB_TOKEN }}
+    github-token: \${{ github.token }}
 \`\`\`
 
 ### Changes
@@ -113,6 +113,7 @@ if command -v gh &> /dev/null; then
 - Customizable scoring system
 - Incremental update support
 - Comprehensive documentation
+- Fixed Docker buildx cache issues
 "
     print_success "GitHub release created!"
 else

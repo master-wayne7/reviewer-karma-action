@@ -12,16 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build and Release
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: false
-          tags: |
-            master-wayne7/reviewer-karma-action:${{ github.ref_name }}
-            master-wayne7/reviewer-karma-action:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        run: |
+          docker build -t master-wayne7/reviewer-karma-action:${{ github.ref_name }} .
+          docker build -t master-wayne7/reviewer-karma-action:latest .
 
       - name: Create Release
         uses: actions/create-release@v1

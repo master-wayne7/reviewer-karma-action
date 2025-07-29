@@ -22,7 +22,8 @@ jobs:
       - name: Run Reviewer Karma Action with Incremental Updates
         uses: master-wayne7/reviewer-karma-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
           review-point: "1"
           positive-emoji-point: "2"
           constructive-comment-point: "1"

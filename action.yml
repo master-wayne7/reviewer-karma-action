@@ -22,13 +22,16 @@ inputs:
     description: "GitHub token for API access"
     required: false
     default: "${{ github.token }}"
+  repository:
+    description: "Repository name (format: owner/repo)"
+    required: false
+    default: "${{ github.repository }}"
 runs:
   using: "docker"
   image: "Dockerfile"
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
-    GITHUB_REPOSITORY: ${{ github.repository }}
-    GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+    GITHUB_REPOSITORY: ${{ inputs.repository }}
     REVIEW_POINT: ${{ inputs.review-point }}
     POSITIVE_EMOJI_POINT: ${{ inputs.positive-emoji-point }}
     CONSTRUCTIVE_COMMENT_POINT: ${{ inputs.constructive-comment-point }}
