@@ -37,5 +37,5 @@ runs:
     CONSTRUCTIVE_COMMENT_POINT: ${{ inputs.constructive-comment-point }}
     INCREMENTAL_UPDATE: ${{ inputs.incremental-update }}
 branding:
-  icon: "trophy"
-  color: "gold"
+  icon: "award"
+  color: "yellow"
