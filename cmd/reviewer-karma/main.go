@@ -15,6 +15,24 @@ import (
 )
 
 func main() {
+	// Check for help flag
+	if len(os.Args) > 1 && (os.Args[1] == "--help" || os.Args[1] == "-h") {
+		fmt.Println("Reviewer Karma Action")
+		fmt.Println("Track reviewer engagement and generate a karma-based leaderboard")
+		fmt.Println("")
+		fmt.Println("Environment variables:")
+		fmt.Println("  GITHUB_TOKEN          - GitHub token for API access")
+		fmt.Println("  GITHUB_REPOSITORY     - Repository name (format: owner/repo)")
+		fmt.Println("  REVIEW_POINT          - Points for reviews (default: 1)")
+		fmt.Println("  POSITIVE_EMOJI_POINT  - Points for emojis (default: 2)")
+		fmt.Println("  CONSTRUCTIVE_COMMENT_POINT - Points for comments (default: 1)")
+		fmt.Println("  INCREMENTAL_UPDATE    - Use incremental updates (default: false)")
+		fmt.Println("")
+		fmt.Println("Usage:")
+		fmt.Println("  ./reviewer-karma [--help]")
+		os.Exit(0)
+	}
+
 	// Get GitHub token from environment
 	token := os.Getenv("GITHUB_TOKEN")
 	if token == "" {

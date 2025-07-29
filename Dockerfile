@@ -1,5 +1,8 @@
-# Build stage
-FROM golang:1.24-alpine AS builder
+# Single stage build for simplicity
+FROM golang:1.24-alpine
+
+# Install ca-certificates for HTTPS requests
+RUN apk --no-cache add ca-certificates
 
 WORKDIR /app
 
@@ -13,18 +16,10 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o reviewer-karma ./cmd/reviewer-karma
+RUN CGO_ENABLED=0 GOOS=linux go build -o reviewer-karma ./cmd/reviewer-karma
 
-# Final stage
-FROM alpine:latest
-
-# Install ca-certificates for HTTPS requests
-RUN apk --no-cache add ca-certificates
-
-WORKDIR /root/
-
-# Copy the binary from builder stage
-COPY --from=builder /app/reviewer-karma .
+# Verify the binary was created
+RUN ls -la reviewer-karma && file reviewer-karma
 
 # Make the binary executable
 RUN chmod +x reviewer-karma
